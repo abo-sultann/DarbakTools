@@ -1,6 +1,7 @@
 package com.abosultan.darbaktools;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -10,7 +11,6 @@ import android.graphics.Color;
 import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -206,12 +206,31 @@ public class TransferActivity extends Activity {
     }
 
     private void openAccessibilitySettings() {
-        try {
-            startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-            Toast.makeText(this, "فعّل خدمة «دربك للتحكم»", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "تعذر فتح إعدادات إمكانية الوصول", Toast.LENGTH_SHORT).show();
+        if (RemoteAccessibilityService.isReady()) {
+            Toast.makeText(this, "التحكم باللمس مفعّل بالفعل", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        int result = AccessibilitySettingsHelper.open(this);
+        if (result == AccessibilitySettingsHelper.OPENED_ACCESSIBILITY) {
+            Toast.makeText(this, "فعّل خدمة «دربك للتحكم» ثم ارجع للتطبيق", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (result == AccessibilitySettingsHelper.OPENED_GENERAL_SETTINGS) {
+            new AlertDialog.Builder(this)
+                    .setTitle("إعدادات شاشة السيارة")
+                    .setMessage("روم الشاشة لا يفتح صفحة إمكانية الوصول مباشرة. ابحث داخل الإعدادات عن «إمكانية الوصول» أو Accessibility ثم فعّل «دربك للتحكم». إذا لم تجد القائمة أصلًا، يمكننا تفعيلها مرة واحدة عبر ADB أو Root.")
+                    .setPositiveButton("حسنًا", null)
+                    .show();
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("تعذر فتح إعدادات النظام")
+                .setMessage("هذا الروم يبدو أنه أخفى إعدادات إمكانية الوصول. التحكم باللمس يحتاج تفعيل خدمة «دربك للتحكم» مرة واحدة. البديل سيكون عبر ADB أو Root على هذه الشاشة.")
+                .setPositiveButton("حسنًا", null)
+                .show();
     }
 
     @Override
