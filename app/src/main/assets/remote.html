@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>دربك Tools</title>
+<style>
+:root{--bg:#061612;--panel:#0d2821;--panel2:#12362d;--gold:#d8b45a;--text:#f5f7f6;--muted:#9fb3ac;--ok:#42d392;--bad:#ff756d;--line:#264b40}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:linear-gradient(180deg,#071a15 0%,#04110e 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;min-height:100%;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button,input{font:inherit}.app{max-width:920px;margin:0 auto;padding:14px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand b{display:block;color:var(--gold);font-size:26px;letter-spacing:.2px}.brand span{color:var(--muted);font-size:13px}.live{display:flex;align-items:center;gap:7px;background:#0c2922;border:1px solid var(--line);padding:8px 11px;border-radius:999px;font-size:13px;color:var(--muted)}.dot{width:9px;height:9px;border-radius:50%;background:var(--bad)}.live.ok .dot{background:var(--ok);box-shadow:0 0 0 4px rgba(66,211,146,.12)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;background:#0a211b;padding:6px;border-radius:16px;border:1px solid #183c32;margin-bottom:12px;position:sticky;top:6px;z-index:5}.tab{border:0;background:transparent;color:var(--muted);padding:11px 6px;border-radius:11px;font-weight:700}.tab.active{background:var(--gold);color:#10221c}.page{display:none}.page.active{display:block}.card{background:rgba(13,40,33,.96);border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:12px}.card h2{font-size:18px;margin:0 0 10px}.sub{color:var(--muted);font-size:13px;line-height:1.6}.screenShell{position:relative;width:100%;aspect-ratio:1024/600;background:#020806;border:1px solid #31594d;border-radius:18px;overflow:hidden;touch-action:none;user-select:none}.screenShell img{display:block;width:100%;height:100%;object-fit:contain;background:#000}.screenOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;background:linear-gradient(180deg,rgba(4,17,14,.78),rgba(4,17,14,.9));color:var(--muted);font-weight:700;line-height:1.8}.screenOverlay.hide{display:none}.badgeRow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}.badge{border:1px solid var(--line);background:#0a211b;color:var(--muted);padding:7px 10px;border-radius:999px;font-size:12px}.badge.ok{color:var(--ok);border-color:#286a50}.remoteGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.ctl{min-height:48px;border:1px solid #31594d;border-radius:14px;background:#102f27;color:var(--text);font-weight:800}.ctl:active{transform:scale(.97);background:#173f35}.ctl.gold{background:var(--gold);color:#10221c;border-color:var(--gold)}.textRow{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.field{width:100%;min-height:48px;background:#071b16;color:var(--text);border:1px solid #31594d;border-radius:14px;padding:11px 13px;outline:none;font-size:16px}.field:focus{border-color:var(--gold)}.send{border:0;background:var(--gold);color:#10221c;border-radius:14px;padding:0 18px;font-weight:800}.drop{border:1.5px dashed #4e7368;border-radius:18px;padding:24px 16px;text-align:center;background:#0a211b}.pick{display:inline-block;margin-top:10px;background:var(--gold);color:#10221c;padding:12px 18px;border-radius:13px;font-weight:800}.drop input{display:none}.progress{height:7px;background:#071b16;border-radius:99px;overflow:hidden;margin-top:12px}.progress i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s}.files{display:grid;gap:8px;margin-top:10px}.file{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;color:var(--text);background:#0a211b;border:1px solid #1d4438;border-radius:14px;padding:12px}.file strong{font-size:14px;word-break:break-word}.file small{color:var(--gold);white-space:nowrap}.empty{padding:24px 8px;text-align:center;color:var(--muted)}.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.appBtn{border:1px solid #244b40;background:#0a211b;color:var(--text);border-radius:15px;padding:14px 8px;min-height:70px;font-weight:700;overflow:hidden}.appBtn small{display:block;color:var(--muted);font-size:10px;margin-top:5px;direction:ltr;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.linkRow{display:grid;grid-template-columns:1fr auto;gap:8px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(30px);background:#183b31;border:1px solid #3c6659;color:#fff;padding:11px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:20}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:560px){.app{padding:10px}.brand b{font-size:22px}.tabs{gap:4px}.tab{font-size:12px;padding:10px 3px}.card{border-radius:17px;padding:10px}.remoteGrid{grid-template-columns:repeat(5,1fr);gap:6px}.ctl{font-size:12px;min-height:45px}.apps{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><b>دربك Tools</b><span>تحكم وإدارة شاشة السيارة</span></div>
+    <div id="live" class="live"><i class="dot"></i><span id="liveText">جاري الاتصال…</span></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-page="remote">التحكم</button>
+    <button class="tab" data-page="files">الملفات</button>
+    <button class="tab" data-page="apps">التطبيقات</button>
+    <button class="tab" data-page="links">الروابط</button>
+  </div>
+
+  <section id="remote" class="page active">
+    <div class="card">
+      <div id="screenShell" class="screenShell">
+        <img id="screen" alt="شاشة السيارة">
+        <div id="screenOverlay" class="screenOverlay">عرض الشاشة غير مفعّل بعد.<br>من شاشة السيارة افتح «اتصال الآيفون» واضغط «تفعيل عرض الشاشة» مرة واحدة.</div>
+      </div>
+      <div class="badgeRow">
+        <span id="capBadge" class="badge">العرض: غير مفعّل</span>
+        <span id="touchBadge" class="badge">اللمس: غير مفعّل</span>
+        <span id="sizeBadge" class="badge">1024×600</span>
+      </div>
+      <div class="remoteGrid">
+        <button class="ctl" data-key="back">رجوع</button>
+        <button class="ctl gold" data-key="home">الرئيسية</button>
+        <button class="ctl" data-key="recents">الأخيرة</button>
+        <button class="ctl" data-key="voldown">صوت −</button>
+        <button class="ctl" data-key="volup">صوت +</button>
+      </div>
+      <div class="textRow">
+        <input id="remoteText" class="field" placeholder="اكتب هنا ثم أرسل للشاشة">
+        <button id="sendText" class="send">إرسال</button>
+      </div>
+    </div>
+    <div class="card"><div class="sub">المس صورة الشاشة مباشرة للنقر. اسحب عليها للتمرير، واضغط مطولًا لتنفيذ ضغط مطول. الأوامر تعمل فقط بعد تفعيل خدمة «دربك للتحكم» من إمكانية الوصول.</div></div>
+  </section>
+
+  <section id="files" class="page">
+    <div class="card">
+      <h2>إرسال للشاشة</h2>
+      <div class="drop">
+        <div>صور، صوتيات، فيديو، PDF، ZIP أو APK</div>
+        <label class="pick" for="filePicker">اختيار الملفات</label>
+        <input id="filePicker" type="file" multiple>
+        <div class="progress"><i id="bar"></i></div>
+        <div id="uploadText" class="sub" style="margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="card"><h2>الوارد في الشاشة</h2><div id="fileList" class="files"><div class="empty">جاري قراءة الملفات…</div></div></div>
+  </section>
+
+  <section id="apps" class="page">
+    <div class="card"><h2>تشغيل التطبيقات</h2><div class="sub" style="margin-bottom:10px">شغّل أي تطبيق مثبت على الشاشة مباشرة من الآيفون.</div><div id="appList" class="apps"><div class="empty">جاري قراءة التطبيقات…</div></div></div>
+  </section>
+
+  <section id="links" class="page">
+    <div class="card">
+      <h2>إرسال رابط للشاشة</h2>
+      <div class="linkRow"><input id="url" class="field" type="url" inputmode="url" placeholder="https://..."><button id="sendLink" class="send">إرسال</button></div>
+      <div class="sub" style="margin-top:10px">يصل الرابط فورًا إلى DarbakTools ويمكن فتحه على الشاشة أو استخدامه للتنزيل.</div>
+    </div>
+  </section>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+let status={screen:false,accessibility:false,width:1024,height:600}, appsLoaded=false, filesLoaded=false, screenTimer=null, down=null, longTimer=null;
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),1800)}
+async function post(path,obj={}){const body=new URLSearchParams();Object.keys(obj).forEach(k=>body.set(k,obj[k]));const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body});if(!r.ok)throw new Error(await r.text());return r.text()}
+async function refreshStatus(){try{const r=await fetch('/api/status?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;status=await r.json();$('#live').classList.add('ok');$('#liveText').textContent='متصل بالشاشة';$('#capBadge').textContent=status.screen?'العرض: يعمل':'العرض: غير مفعّل';$('#capBadge').classList.toggle('ok',!!status.screen);$('#touchBadge').textContent=status.accessibility?'اللمس: يعمل':'اللمس: غير مفعّل';$('#touchBadge').classList.toggle('ok',!!status.accessibility);$('#sizeBadge').textContent=(status.width||1024)+'×'+(status.height||600);$('#screenOverlay').classList.toggle('hide',!!status.screen);if(status.screen)startScreen();else stopScreen()}catch(e){$('#live').classList.remove('ok');$('#liveText').textContent='تعذر الاتصال'}}
+function startScreen(){if(screenTimer)return;const update=()=>{const img=$('#screen');img.src='/screen.jpg?t='+Date.now()};update();screenTimer=setInterval(update,650)}
+function stopScreen(){if(screenTimer){clearInterval(screenTimer);screenTimer=null}}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{$$('.tab').forEach(x=>x.classList.remove('active'));$$('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.page).classList.add('active');if(b.dataset.page==='files')loadFiles();if(b.dataset.page==='apps')loadApps()}));
+$$('[data-key]').forEach(b=>b.addEventListener('click',async()=>{try{await post('/api/key',{action:b.dataset.key})}catch(e){toast('الأمر غير متاح')}}));
+$('#sendText').addEventListener('click',async()=>{const text=$('#remoteText').value;if(!text)return;try{await post('/api/text',{text});toast('تم إرسال النص')}catch(e){toast('فعّل التحكم باللمس أولًا')}});
+const shell=$('#screenShell');
+function pt(ev){const r=shell.getBoundingClientRect();const cx=ev.clientX,cy=ev.clientY;return{x:Math.max(0,Math.min(status.width,(cx-r.left)/r.width*status.width)),y:Math.max(0,Math.min(status.height,(cy-r.top)/r.height*status.height))}}
+shell.addEventListener('pointerdown',ev=>{if(!status.accessibility)return;ev.preventDefault();shell.setPointerCapture&&shell.setPointerCapture(ev.pointerId);const p=pt(ev);down={...p,t:Date.now(),id:ev.pointerId};clearTimeout(longTimer);longTimer=setTimeout(async()=>{if(!down)return;try{await post('/api/long',{x:Math.round(down.x),y:Math.round(down.y)});down=null}catch(e){}},650)});
+shell.addEventListener('pointerup',async ev=>{if(!down)return;ev.preventDefault();clearTimeout(longTimer);const start=down,end=pt(ev),dur=Date.now()-start.t;down=null;const dx=end.x-start.x,dy=end.y-start.y,dist=Math.sqrt(dx*dx+dy*dy);try{if(dist<18)await post('/api/tap',{x:Math.round(end.x),y:Math.round(end.y)});else await post('/api/swipe',{x1:Math.round(start.x),y1:Math.round(start.y),x2:Math.round(end.x),y2:Math.round(end.y),duration:Math.max(140,Math.min(900,dur))})}catch(e){toast('فعّل التحكم باللمس على الشاشة')}});
+shell.addEventListener('pointercancel',()=>{clearTimeout(longTimer);down=null});
+async function loadFiles(){if(filesLoaded)return;try{const r=await fetch('/api/files?t='+Date.now(),{cache:'no-store'}),data=await r.json();const box=$('#fileList');box.innerHTML='';if(!data.length){box.innerHTML='<div class="empty">لا توجد ملفات في الوارد</div>'}else data.forEach(f=>{const a=document.createElement('a');a.className='file';a.href='/download?name='+encodeURIComponent(f.name);const s=document.createElement('strong');s.textContent=f.name;const z=document.createElement('small');z.textContent=f.size;a.append(s,z);box.appendChild(a)});filesLoaded=true}catch(e){toast('تعذر قراءة الملفات')}}
+$('#filePicker').addEventListener('change',async ev=>{const files=Array.from(ev.target.files||[]);if(!files.length)return;const bar=$('#bar'),txt=$('#uploadText');for(let i=0;i<files.length;i++){txt.textContent='إرسال '+(i+1)+' من '+files.length+': '+files[i].name;await new Promise((resolve,reject)=>{const fd=new FormData();fd.append('file',files[i],files[i].name);const x=new XMLHttpRequest();x.open('POST','/upload');x.upload.onprogress=e=>{if(e.lengthComputable)bar.style.width=Math.round(e.loaded/e.total*100)+'%'};x.onload=()=>x.status>=200&&x.status<300?resolve():reject();x.onerror=reject;x.send(fd)}).catch(()=>toast('تعذر إرسال '+files[i].name))}txt.textContent='تم الإرسال';bar.style.width='100%';filesLoaded=false;setTimeout(()=>{bar.style.width='0';loadFiles()},500)});
+async function loadApps(){if(appsLoaded)return;try{const r=await fetch('/api/apps?t='+Date.now(),{cache:'no-store'}),data=await r.json(),box=$('#appList');box.innerHTML='';data.forEach(a=>{const b=document.createElement('button');b.className='appBtn';b.textContent=a.name;const s=document.createElement('small');s.textContent=a.package;b.appendChild(s);b.addEventListener('click',async()=>{try{await post('/api/launch',{package:a.package});toast('تم فتح '+a.name)}catch(e){toast('تعذر تشغيل التطبيق')}});box.appendChild(b)});if(!data.length)box.innerHTML='<div class="empty">لم يتم العثور على تطبيقات</div>';appsLoaded=true}catch(e){toast('تعذر قراءة التطبيقات')}}
+$('#sendLink').addEventListener('click',async()=>{const url=$('#url').value.trim();if(!url)return;try{await post('/link',{url});toast('تم إرسال الرابط')}catch(e){toast('تعذر إرسال الرابط')}});
+refreshStatus();setInterval(refreshStatus,1800);
+})();
+</script>
+</body>
+</html>
