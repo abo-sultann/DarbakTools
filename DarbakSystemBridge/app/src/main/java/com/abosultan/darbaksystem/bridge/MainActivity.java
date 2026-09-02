@@ -147,6 +147,8 @@ public final class MainActivity extends Activity {
             main.post(() -> {
                 if (result.isSuccess() && result.output.contains("uid=0")) {
                     stateView.setText("Root متوفر وجاهز");
+                } else if (result.output.contains("not allowed")) {
+                    stateView.setText("su موجود لكنه يمنع التطبيقات العادية");
                 } else {
                     stateView.setText("Root غير متاح أو لم تتم الموافقة");
                 }

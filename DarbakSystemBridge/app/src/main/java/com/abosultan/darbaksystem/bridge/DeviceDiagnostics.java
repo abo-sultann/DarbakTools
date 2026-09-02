@@ -2,6 +2,9 @@ package com.abosultan.darbaksystem.bridge;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -11,11 +14,15 @@ import android.os.StatFs;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
 final class DeviceDiagnostics {
+    private static final String AOSP_PLATFORM_SHA256 =
+            "C8A2E9BCCF597C2FB6DC66BEE293FC13F2FC47EC77BC6B2B0D52C11F51192AB8";
+
     private DeviceDiagnostics() {
     }
 
@@ -52,7 +59,7 @@ final class DeviceDiagnostics {
 
     static String buildReport(Context context) {
         StringBuilder report = new StringBuilder();
-        report.append("Darbak System Bridge 0.1.0\n");
+        report.append("Darbak System Bridge 0.1.1\n");
         report.append("================================\n");
         add(report, "IP", localIp(context));
         add(report, "Android الظاهر", Build.VERSION.RELEASE);
@@ -89,7 +96,32 @@ final class DeviceDiagnostics {
             add(report, property, emptyAsDash(RootShell.getProperty(property)));
         }
         add(report, "su binary", RootShell.hasSuBinary() ? "موجود" : "غير موجود");
+        String platformSha256 = platformSignatureSha256(context);
+        add(report, "مفتاح منصة AOSP", AOSP_PLATFORM_SHA256.equals(platformSha256)
+                ? "مطابق للمفتاح الافتراضي"
+                : "غير مطابق للمفتاح الافتراضي");
+        add(report, "Platform SHA-256", platformSha256);
         return report.toString();
+    }
+
+    private static String platformSignatureSha256(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    "android", PackageManager.GET_SIGNATURES);
+            Signature[] signatures = info.signatures;
+            if (signatures == null || signatures.length == 0) {
+                return "غير متوفر";
+            }
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] value = digest.digest(signatures[0].toByteArray());
+            StringBuilder hex = new StringBuilder(value.length * 2);
+            for (byte item : value) {
+                hex.append(String.format("%02X", item & 0xff));
+            }
+            return hex.toString();
+        } catch (Exception error) {
+            return "تعذر الفحص: " + error.getClass().getSimpleName();
+        }
     }
 
     private static void add(StringBuilder report, String key, String value) {
