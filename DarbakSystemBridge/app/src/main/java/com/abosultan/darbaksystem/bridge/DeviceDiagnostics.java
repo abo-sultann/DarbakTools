@@ -59,7 +59,7 @@ final class DeviceDiagnostics {
 
     static String buildReport(Context context) {
         StringBuilder report = new StringBuilder();
-        report.append("Darbak System Bridge 0.1.2\n");
+        report.append("Darbak System Bridge 0.1.3\n");
         report.append("================================\n");
         add(report, "IP", localIp(context));
         add(report, "Android الظاهر", Build.VERSION.RELEASE);
@@ -101,13 +101,33 @@ final class DeviceDiagnostics {
                 ? "مطابق للمفتاح الافتراضي"
                 : "غير مطابق للمفتاح الافتراضي");
         add(report, "Platform SHA-256", platformSha256);
+        report.append('\n');
+        report.append("فحص مسارات الوصول — قراءة فقط\n");
+        report.append("--------------------------------\n");
+        String shellSha256 = packageSignatureSha256(context, "com.android.shell");
+        add(report, "Shell SHA-256", shellSha256);
+        add(report, "علاقة مفتاح Shell", platformSha256.equals(shellSha256)
+                ? "نفس مفتاح المنصة"
+                : "مفتاح مختلف عن المنصة");
+        add(report, "Shell UID", packageUid(context, "com.android.shell"));
+        add(report, "Settings SHA-256", packageSignatureSha256(context, "com.android.settings"));
+        add(report, "SystemUI SHA-256", packageSignatureSha256(context, "com.android.systemui"));
+        add(report, "هوية تطبيق دربك", emptyAsDash(RootShell.runNormal("id").output));
+        add(report, "حالة SELinux", emptyAsDash(RootShell.runNormal("getenforce 2>/dev/null").output));
+        add(report, "adb_enabled", emptyAsDash(RootShell.runNormal(
+                "settings get global adb_enabled 2>/dev/null").output));
+        add(report, "تفاصيل su", suDetails());
         return report.toString();
     }
 
     private static String platformSignatureSha256(Context context) {
+        return packageSignatureSha256(context, "android");
+    }
+
+    private static String packageSignatureSha256(Context context, String packageName) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(
-                    "android", PackageManager.GET_SIGNATURES);
+                    packageName, PackageManager.GET_SIGNATURES);
             Signature[] signatures = info.signatures;
             if (signatures == null || signatures.length == 0) {
                 return "غير متوفر";
@@ -122,6 +142,22 @@ final class DeviceDiagnostics {
         } catch (Exception error) {
             return "تعذر الفحص: " + error.getClass().getSimpleName();
         }
+    }
+
+    private static String packageUid(Context context, String packageName) {
+        try {
+            return String.valueOf(context.getPackageManager()
+                    .getApplicationInfo(packageName, 0).uid);
+        } catch (Exception error) {
+            return "غير متوفر";
+        }
+    }
+
+    private static String suDetails() {
+        ShellResult result = RootShell.runNormal(
+                "for f in /system/bin/su /system/xbin/su /sbin/su /vendor/bin/su; do " +
+                "if [ -e \"$f\" ]; then ls -l \"$f\"; fi; done");
+        return emptyAsDash(result.output).replace('\n', ' ');
     }
 
     private static void add(StringBuilder report, String key, String value) {
