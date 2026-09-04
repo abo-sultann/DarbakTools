@@ -91,7 +91,7 @@ public final class MainActivity extends Activity {
         rootCheck.setOnClickListener(view -> checkRoot());
         controls.addView(rootCheck, matchWrap(dp(10)));
 
-        Button enable = button("تشغيل ADB مؤقتًا — ضغط مطوّل");
+        Button enable = button("تشغيل ADB عبر Wi-Fi — ضغط مطوّل");
         enable.setOnClickListener(view -> toast("اضغط الزر مطولًا للحماية"));
         enable.setOnLongClickListener(view -> {
             confirmEnable();
@@ -99,7 +99,7 @@ public final class MainActivity extends Activity {
         });
         controls.addView(enable, matchWrap(dp(10)));
 
-        Button disable = button("إيقاف ADB — ضغط مطوّل");
+        Button disable = button("إيقاف ADB عبر Wi-Fi — ضغط مطوّل");
         disable.setOnClickListener(view -> toast("اضغط الزر مطولًا للحماية"));
         disable.setOnLongClickListener(view -> {
             confirmDisable();
@@ -160,8 +160,8 @@ public final class MainActivity extends Activity {
 
     private void confirmEnable() {
         new AlertDialog.Builder(this)
-                .setTitle("تشغيل اتصال مؤقت؟")
-                .setMessage("سيتم تشغيل ADB على المنفذ 5555 داخل شبكة Wi‑Fi الحالية فقط. لا يبدأ مع تشغيل الشاشة، ويمكن إيقافه من التطبيق أو بإعادة تشغيل الشاشة.")
+                .setTitle("تشغيل ADB عبر Wi-Fi مؤقتًا؟")
+                .setMessage("سيتم ضبط المنفذ 5555 وإعادة تشغيل خدمة ADB فقط. لا تُعدّل ملفات النظام، ويُلغى الاتصال بإعادة تشغيل الشاشة أو من زر الإيقاف.")
                 .setNegativeButton("إلغاء", null)
                 .setPositiveButton("تشغيل", (dialog, which) -> enableAdb())
                 .show();
@@ -169,8 +169,8 @@ public final class MainActivity extends Activity {
 
     private void confirmDisable() {
         new AlertDialog.Builder(this)
-                .setTitle("إيقاف الاتصال؟")
-                .setMessage("سيتم إيقاف خدمة ADB المؤقتة فورًا.")
+                .setTitle("إيقاف ADB عبر Wi-Fi؟")
+                .setMessage("سيتم إغلاق المنفذ اللاسلكي مع إبقاء خيار تصحيح USB كما هو.")
                 .setNegativeButton("إلغاء", null)
                 .setPositiveButton("إيقاف", (dialog, which) -> disableAdb())
                 .show();
@@ -181,14 +181,18 @@ public final class MainActivity extends Activity {
         worker.execute(() -> {
             ShellResult result = RootShell.enableTemporaryAdb();
             String port = RootShell.getProperty("service.adb.tcp.port");
-            boolean enabled = result.isSuccess() && "5555".equals(port.trim());
+            boolean propertySet = "5555".equals(port.trim());
+            boolean reachable = DeviceDiagnostics.isAdbTcpReachable(this);
             main.post(() -> {
                 String ip = DeviceDiagnostics.localIp(this);
-                if (enabled) {
+                if (propertySet && reachable) {
                     stateView.setText("ADB يعمل مؤقتًا\n" + ip + ":5555");
                     toast("من اللابتوب: adb connect " + ip + ":5555");
+                } else if (propertySet) {
+                    stateView.setText("تم ضبط المنفذ لكن الخدمة لم تفتحه بعد");
+                    toast("أوقف تصحيح USB وشغّله مرة واحدة ثم حدّث الفحص");
                 } else {
-                    stateView.setText("تعذر تشغيل ADB — يلزم فحص التقرير");
+                    stateView.setText("النظام منع تغيير منفذ ADB");
                     toast(shortOutput(result));
                 }
                 refreshReport(stateView.getText().toString());
@@ -200,8 +204,9 @@ public final class MainActivity extends Activity {
         setBusy("جارٍ إيقاف ADB…");
         worker.execute(() -> {
             ShellResult result = RootShell.disableTemporaryAdb();
+            boolean stopped = !DeviceDiagnostics.isAdbTcpReachable(this);
             main.post(() -> {
-                stateView.setText(result.isSuccess() ? "تم إيقاف ADB" : "تعذر تأكيد إيقاف ADB");
+                stateView.setText(stopped ? "تم إيقاف ADB اللاسلكي" : "تعذر تأكيد إيقاف ADB اللاسلكي");
                 toast(shortOutput(result));
                 refreshReport(stateView.getText().toString());
             });

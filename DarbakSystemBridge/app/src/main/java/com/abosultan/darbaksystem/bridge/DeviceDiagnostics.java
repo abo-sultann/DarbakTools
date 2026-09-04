@@ -14,7 +14,9 @@ import android.provider.Settings;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -60,7 +62,7 @@ final class DeviceDiagnostics {
 
     static String buildReport(Context context) {
         StringBuilder report = new StringBuilder();
-        report.append("Darbak System Bridge 0.1.4\n");
+        report.append("Darbak System Bridge 0.1.5\n");
         report.append("================================\n");
         add(report, "IP", localIp(context));
         add(report, "Android الظاهر", Build.VERSION.RELEASE);
@@ -126,7 +128,7 @@ final class DeviceDiagnostics {
         String adbdState = RootShell.getProperty("init.svc.adbd");
         String tcpPort = RootShell.getProperty("service.adb.tcp.port");
         String persistentTcpPort = RootShell.getProperty("persist.adb.tcp.port");
-        boolean port5555Listening = isPort5555Listening();
+        boolean port5555Listening = isAdbTcpReachable(context);
         add(report, "خيارات المطور محفوظة", settingState(developmentEnabled));
         add(report, "تصحيح USB محفوظ", settingState(adbEnabled));
         add(report, "قيمة adb_enabled المباشرة", emptyAsDash(adbEnabled));
@@ -201,10 +203,27 @@ final class DeviceDiagnostics {
         return "غير محدد";
     }
 
-    private static boolean isPort5555Listening() {
-        ShellResult result = RootShell.runNormal(
-                "cat /proc/net/tcp /proc/net/tcp6 2>/dev/null | grep -i ':15B3 ' | grep ' 0A ' | head -n 1");
-        return result.isSuccess() && !result.output.trim().isEmpty();
+    static boolean isAdbTcpReachable(Context context) {
+        String ip = localIp(context);
+        if (!"غير متوفر".equals(ip) && canConnect(ip, 5555)) {
+            return true;
+        }
+        return canConnect("127.0.0.1", 5555);
+    }
+
+    private static boolean canConnect(String host, int port) {
+        Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress(host, port), 600);
+            return true;
+        } catch (Exception ignored) {
+            return false;
+        } finally {
+            try {
+                socket.close();
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     private static String processDetails(String processName) {

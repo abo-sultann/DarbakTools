@@ -33,24 +33,21 @@ final class RootShell {
 
     static ShellResult enableTemporaryAdb() {
         String command =
-                "settings put global development_settings_enabled 1; " +
-                "settings put global adb_enabled 1; " +
                 "setprop service.adb.tcp.port 5555; " +
-                "stop adbd; start adbd; sleep 2; " +
-                "echo adb_enabled=$(settings get global adb_enabled); " +
+                "setprop ctl.restart adbd; sleep 3; " +
                 "echo tcp_port=$(getprop service.adb.tcp.port); " +
+                "echo adbd=$(getprop init.svc.adbd); " +
                 "echo user=$(id)";
-        return runRoot(command);
+        return runNormal(command);
     }
 
     static ShellResult disableTemporaryAdb() {
         String command =
-                "settings put global adb_enabled 0; " +
-                "stop adbd; " +
                 "setprop service.adb.tcp.port -1; " +
-                "echo adb_enabled=$(settings get global adb_enabled); " +
-                "echo tcp_port=$(getprop service.adb.tcp.port)";
-        return runRoot(command);
+                "setprop ctl.restart adbd; sleep 2; " +
+                "echo tcp_port=$(getprop service.adb.tcp.port); " +
+                "echo adbd=$(getprop init.svc.adbd)";
+        return runNormal(command);
     }
 
     static String getProperty(String name) {
