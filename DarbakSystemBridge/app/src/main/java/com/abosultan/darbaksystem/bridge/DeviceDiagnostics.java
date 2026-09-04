@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.provider.Settings;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -59,7 +60,7 @@ final class DeviceDiagnostics {
 
     static String buildReport(Context context) {
         StringBuilder report = new StringBuilder();
-        report.append("Darbak System Bridge 0.1.3\n");
+        report.append("Darbak System Bridge 0.1.4\n");
         report.append("================================\n");
         add(report, "IP", localIp(context));
         add(report, "Android الظاهر", Build.VERSION.RELEASE);
@@ -117,6 +118,27 @@ final class DeviceDiagnostics {
         add(report, "adb_enabled", emptyAsDash(RootShell.runNormal(
                 "settings get global adb_enabled 2>/dev/null").output));
         add(report, "تفاصيل su", suDetails());
+        report.append('\n');
+        report.append("جاهزية ADB — قراءة فقط\n");
+        report.append("--------------------------------\n");
+        String developmentEnabled = globalSetting(context, "development_settings_enabled");
+        String adbEnabled = globalSetting(context, "adb_enabled");
+        String adbdState = RootShell.getProperty("init.svc.adbd");
+        String tcpPort = RootShell.getProperty("service.adb.tcp.port");
+        String persistentTcpPort = RootShell.getProperty("persist.adb.tcp.port");
+        boolean port5555Listening = isPort5555Listening();
+        add(report, "خيارات المطور محفوظة", settingState(developmentEnabled));
+        add(report, "تصحيح USB محفوظ", settingState(adbEnabled));
+        add(report, "قيمة adb_enabled المباشرة", emptyAsDash(adbEnabled));
+        add(report, "حالة خدمة adbd", emptyAsDash(adbdState));
+        add(report, "منفذ ADB المؤقت", emptyAsDash(tcpPort));
+        add(report, "منفذ ADB الدائم", emptyAsDash(persistentTcpPort));
+        add(report, "المنفذ 5555", port5555Listening ? "يستمع للاتصال" : "غير مستمع");
+        add(report, "عملية adbd", processDetails("adbd"));
+        add(report, "ملف adbd", adbBinaryDetails());
+        add(report, "صلاحية WRITE_SECURE_SETTINGS", hasPermission(
+                context, "android.permission.WRITE_SECURE_SETTINGS") ? "ممنوحة" : "غير ممنوحة");
+        add(report, "التشخيص", adbDiagnosis(adbEnabled, adbdState, tcpPort, port5555Listening));
         return report.toString();
     }
 
@@ -158,6 +180,67 @@ final class DeviceDiagnostics {
                 "for f in /system/bin/su /system/xbin/su /sbin/su /vendor/bin/su; do " +
                 "if [ -e \"$f\" ]; then ls -l \"$f\"; fi; done");
         return emptyAsDash(result.output).replace('\n', ' ');
+    }
+
+    private static String globalSetting(Context context, String key) {
+        try {
+            String value = Settings.Global.getString(context.getContentResolver(), key);
+            return value == null ? "-" : value.trim();
+        } catch (Exception error) {
+            return "تعذر الفحص: " + error.getClass().getSimpleName();
+        }
+    }
+
+    private static String settingState(String value) {
+        if ("1".equals(value)) {
+            return "نعم";
+        }
+        if ("0".equals(value)) {
+            return "لا";
+        }
+        return "غير محدد";
+    }
+
+    private static boolean isPort5555Listening() {
+        ShellResult result = RootShell.runNormal(
+                "cat /proc/net/tcp /proc/net/tcp6 2>/dev/null | grep -i ':15B3 ' | grep ' 0A ' | head -n 1");
+        return result.isSuccess() && !result.output.trim().isEmpty();
+    }
+
+    private static String processDetails(String processName) {
+        ShellResult result = RootShell.runNormal(
+                "ps 2>/dev/null | grep '[" + processName.substring(0, 1) + "]" +
+                        processName.substring(1) + "' | head -n 1");
+        return emptyAsDash(result.output).replace('\n', ' ');
+    }
+
+    private static String adbBinaryDetails() {
+        ShellResult result = RootShell.runNormal(
+                "for f in /sbin/adbd /system/bin/adbd; do " +
+                        "if [ -e \"$f\" ]; then ls -l \"$f\"; fi; done");
+        return emptyAsDash(result.output).replace('\n', ' ');
+    }
+
+    private static boolean hasPermission(Context context, String permission) {
+        return context.getPackageManager().checkPermission(permission, context.getPackageName())
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private static String adbDiagnosis(String adbEnabled, String adbdState, String tcpPort,
+                                       boolean port5555Listening) {
+        if (port5555Listening || "5555".equals(tcpPort.trim())) {
+            return "ADB اللاسلكي جاهز";
+        }
+        if ("running".equals(adbdState.trim())) {
+            return "خدمة ADB تعمل ولكنها ليست على Wi-Fi";
+        }
+        if ("1".equals(adbEnabled)) {
+            return "تصحيح USB محفوظ لكن خدمة ADB متوقفة";
+        }
+        if ("0".equals(adbEnabled)) {
+            return "تصحيح USB غير مفعّل";
+        }
+        return "نحتاج نتيجة القيم أعلاه لتحديد المسار";
     }
 
     private static void add(StringBuilder report, String key, String value) {
