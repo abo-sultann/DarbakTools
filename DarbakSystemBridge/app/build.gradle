@@ -6,20 +6,33 @@ android {
     namespace "com.abosultan.darbaksystem.bridge"
     compileSdk 34
 
+    signingConfigs {
+        stable {
+            storeFile file("../signing/darbak-system-release.jks")
+            storePassword project.property("darbakStorePassword")
+            keyAlias "darbak-system"
+            keyPassword project.property("darbakKeyPassword")
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     defaultConfig {
         applicationId "com.abosultan.darbaksystem.bridge"
         minSdk 21
         targetSdk 25
-        versionCode 2
-        versionName "0.1.1"
+        versionCode 3
+        versionName "0.1.2"
     }
 
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.stable
         }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.stable
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }

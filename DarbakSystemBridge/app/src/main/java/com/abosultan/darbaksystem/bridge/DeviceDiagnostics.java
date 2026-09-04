@@ -59,7 +59,7 @@ final class DeviceDiagnostics {
 
     static String buildReport(Context context) {
         StringBuilder report = new StringBuilder();
-        report.append("Darbak System Bridge 0.1.1\n");
+        report.append("Darbak System Bridge 0.1.2\n");
         report.append("================================\n");
         add(report, "IP", localIp(context));
         add(report, "Android الظاهر", Build.VERSION.RELEASE);
