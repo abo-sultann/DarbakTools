@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,7 +56,7 @@ public class MainActivity extends Activity {
         header.addView(brand, new LinearLayout.LayoutParams(0, -1, 1));
 
         TextView title = Ui.title(this, "دربك Tools", 30);
-        title.setTextColor(Ui.GOLD);
+        title.setTextColor(Ui.BLUE);
         title.setGravity(Gravity.RIGHT | Gravity.BOTTOM);
         brand.addView(title, new LinearLayout.LayoutParams(-1, 0, 1));
 
@@ -65,6 +64,15 @@ public class MainActivity extends Activity {
         sub.setTextColor(Ui.MUTED);
         sub.setGravity(Gravity.RIGHT | Gravity.TOP);
         brand.addView(sub, new LinearLayout.LayoutParams(-1, Ui.dp(this, 31)));
+
+        TextView about = Ui.pill(this, "حول", Ui.BLUE);
+        about.setClickable(true);
+        about.setFocusable(true);
+        Ui.applyPressFeedback(about);
+        about.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
+        LinearLayout.LayoutParams aboutParams = new LinearLayout.LayoutParams(Ui.dp(this, 92), Ui.dp(this, 44));
+        aboutParams.setMargins(Ui.dp(this, 8), 0, 0, 0);
+        header.addView(about, aboutParams);
 
         serverPill = Ui.pill(this, "● جاري تشغيل الاتصال", Ui.MUTED);
         LinearLayout.LayoutParams pillParams = new LinearLayout.LayoutParams(Ui.dp(this, 220), Ui.dp(this, 44));
@@ -81,8 +89,8 @@ public class MainActivity extends Activity {
         grid.addView(row1, new LinearLayout.LayoutParams(-1, 0, 1));
 
         phoneSubtitle = new TextView(this);
-        LinearLayout phone = moduleCard("↔", "الآيفون والتحكم", "جاري اكتشاف عنوان الاتصال…", phoneSubtitle, Ui.GOLD);
-        LinearLayout files = moduleCard("▣", "الملفات", "الذاكرة الداخلية • USB • SD • الوارد", null, Ui.GREEN);
+        LinearLayout phone = moduleCard("↔", "الآيفون والتحكم", "جاري اكتشاف عنوان الاتصال…", phoneSubtitle, Ui.BLUE);
+        LinearLayout files = moduleCard("▣", "الملفات", "الذاكرة الداخلية • USB • SD • الوارد", null, Ui.CYAN);
         row1.addView(phone, Ui.weighted(1, 6, this));
         row1.addView(files, Ui.weighted(1, 6, this));
 
@@ -91,8 +99,8 @@ public class MainActivity extends Activity {
         Ui.rtl(row2);
         grid.addView(row2, new LinearLayout.LayoutParams(-1, 0, 1));
 
-        LinearLayout downloads = moduleCard("↓", "التنزيلات", "تحميل الروابط مباشرة واختيار مكان الحفظ", null, Ui.GOLD);
-        LinearLayout apk = moduleCard("APK", "مركز التطبيقات", "فحص ملفات APK • التوافق • التثبيت والتحديث", null, Ui.GREEN);
+        LinearLayout downloads = moduleCard("↓", "التنزيلات", "تحميل الروابط مباشرة واختيار مكان الحفظ", null, Ui.PURPLE);
+        LinearLayout apk = moduleCard("APK", "مركز التطبيقات", "فحص ملفات APK • التوافق • التثبيت والتحديث", null, Ui.YELLOW);
         row2.addView(downloads, Ui.weighted(1, 6, this));
         row2.addView(apk, Ui.weighted(1, 6, this));
 
@@ -101,7 +109,7 @@ public class MainActivity extends Activity {
         downloads.setOnClickListener(v -> startActivity(new Intent(this, DownloadActivity.class)));
         apk.setOnClickListener(v -> startActivity(new Intent(this, ApkActivity.class)));
 
-        footer = Ui.title(this, "Android 7.1 • 1024×600 • اتصال محلي فقط", 12);
+        footer = Ui.title(this, "Android 7.1 • 1024×600 • اتصال محلي فقط • Darbak UI V1", 12);
         footer.setTextColor(Ui.MUTED);
         footer.setGravity(Gravity.CENTER);
         root.addView(footer, new LinearLayout.LayoutParams(-1, Ui.dp(this, 32)));
@@ -148,11 +156,7 @@ public class MainActivity extends Activity {
         }
         text.addView(subtitle, new LinearLayout.LayoutParams(-1, Ui.dp(this, 48)));
 
-        card.setOnTouchListener((v, event) -> {
-            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) v.setAlpha(.82f);
-            else if (event.getAction() == android.view.MotionEvent.ACTION_UP || event.getAction() == android.view.MotionEvent.ACTION_CANCEL) v.setAlpha(1f);
-            return false;
-        });
+        Ui.applyPressFeedback(card);
         return card;
     }
 
@@ -165,10 +169,10 @@ public class MainActivity extends Activity {
             serverPill.setText("● الاتصال جاهز");
             serverPill.setTextColor(Ui.GREEN);
             phoneSubtitle.setText("http://" + ip + ":" + port + " • Safari");
-            footer.setText("الخادم يعمل • " + ip + ":" + port + " • Android " + android.os.Build.VERSION.RELEASE);
+            footer.setText("الخادم يعمل • " + ip + ":" + port + " • Android " + android.os.Build.VERSION.RELEASE + " • Darbak UI V1");
         } else if (running) {
             serverPill.setText("● بانتظار الشبكة");
-            serverPill.setTextColor(Ui.GOLD);
+            serverPill.setTextColor(Ui.YELLOW);
             phoneSubtitle.setText("الخادم يعمل • اتصل بالشبكة لظهور العنوان");
         } else {
             serverPill.setText("● الخادم متوقف");
