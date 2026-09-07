@@ -64,6 +64,9 @@
         </receiver>
 
         <activity
+            android:name=".AboutActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ApkActivity"
             android:screenOrientation="landscape" />
         <activity
