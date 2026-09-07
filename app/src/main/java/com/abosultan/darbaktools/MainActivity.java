@@ -15,6 +15,9 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.abosultan.darbakcore.DarbakAboutActivity;
+import com.abosultan.darbakcore.DarbakCore;
+
 public class MainActivity extends Activity {
     private static final int REQ_STORAGE = 40;
     private final Handler handler = new Handler();
@@ -32,6 +35,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DarbakCore.install(this);
+        DarbakCore.prepareCarScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         requestStorageIfNeeded();
         DarbakServerService.ensureStarted(this);
@@ -104,6 +109,8 @@ public class MainActivity extends Activity {
         footer = Ui.title(this, "Android 7.1 • 1024×600 • اتصال محلي فقط", 12);
         footer.setTextColor(Ui.MUTED);
         footer.setGravity(Gravity.CENTER);
+        footer.setClickable(true);
+        footer.setOnClickListener(v -> startActivity(new Intent(this, DarbakAboutActivity.class)));
         root.addView(footer, new LinearLayout.LayoutParams(-1, Ui.dp(this, 32)));
         return root;
     }
