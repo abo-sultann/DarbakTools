@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "platform": "Darbak App Platform",
+  "target": {
+    "androidBaseline": "7.1 / API 25",
+    "screen": "1024x600 landscape",
+    "language": "Arabic RTL",
+    "priority": ["stability", "performance", "offline-first", "clarity"]
+  },
+  "apps": [
+    {
+      "name": "Launcher 2026",
+      "repository": "abo-sultann/Launcher.2026",
+      "package": "com.aistudio.carlauncher.lzrk26",
+      "versionCode": 20008,
+      "versionName": "2.0.8",
+      "updateManifestConfigured": true,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "DarbakTools",
+      "repository": "abo-sultann/DarbakTools",
+      "package": "com.abosultan.darbaktools",
+      "versionCode": 3,
+      "versionName": "1.1.1",
+      "updateManifestConfigured": false,
+      "coreMigration": "reference-implementation"
+    },
+    {
+      "name": "Laqqinni",
+      "repository": "abo-sultann/Laqqinni",
+      "package": "com.abosultan.laqqinni",
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "updateManifestConfigured": false,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "DarbakAdhkar",
+      "repository": "abo-sultann/DarbakAdhkar",
+      "package": "com.abosultan.darbakadhkar",
+      "versionCode": 3,
+      "versionName": "1.0.2",
+      "updateManifestConfigured": false,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "DarbakMaintenance",
+      "repository": "abo-sultann/DarbakMaintenance",
+      "package": "com.abosultan.darbakmaintenance",
+      "versionCode": 10001,
+      "versionName": "1.0.1",
+      "updateManifestConfigured": true,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "Darbak Kids TV",
+      "repository": "abo-sultann/DarbakKidsTV",
+      "package": "com.abosultan.darbakkidstv",
+      "versionCode": 6,
+      "versionName": "0.4.0",
+      "updateManifestConfigured": true,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "DarbakMaps",
+      "repository": "abo-sultann/DarbakMaps",
+      "package": "com.abosultan.darbakmaps",
+      "versionCode": 5,
+      "versionName": "0.2.3",
+      "updateManifestConfigured": false,
+      "coreMigration": "pending"
+    },
+    {
+      "name": "DarbAlSout2",
+      "repository": "abo-sultann/DarbAlSout2",
+      "package": "com.abosultan.darbalsoot.gdrive",
+      "versionCode": 7,
+      "versionName": "1.0.6",
+      "updateManifestConfigured": false,
+      "coreMigration": "pending"
+    }
+  ]
+}

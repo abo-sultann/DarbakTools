@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Darbak Settings UI V1: approved shared visual tokens -->
+    <color name="darbak_bg">#07111D</color>
+    <color name="darbak_surface">#CC101E2C</color>
+    <color name="darbak_surface_soft">#99111D2B</color>
+    <color name="darbak_primary">#39A9FF</color>
+    <color name="darbak_primary_soft">#5539A9FF</color>
+    <color name="darbak_text">#FFFFFFFF</color>
+    <color name="darbak_text_secondary">#B8D0E2F1</color>
+    <color name="darbak_success">#4CD989</color>
+    <color name="darbak_warning">#FFC857</color>
+    <color name="darbak_error">#FF647C</color>
+    <color name="darbak_gold">#D7AD55</color>
+
+    <dimen name="darbak_screen_width">1024dp</dimen>
+    <dimen name="darbak_screen_height">600dp</dimen>
+    <dimen name="darbak_page_padding">28dp</dimen>
+    <dimen name="darbak_card_radius">22dp</dimen>
+    <dimen name="darbak_card_padding">22dp</dimen>
+    <dimen name="darbak_touch_min">64dp</dimen>
+    <dimen name="darbak_title_size">34sp</dimen>
+    <dimen name="darbak_section_size">24sp</dimen>
+    <dimen name="darbak_body_size">18sp</dimen>
+    <dimen name="darbak_caption_size">14sp</dimen>
+
+    <style name="DarbakTheme" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/darbak_bg</item>
+        <item name="android:colorAccent">@color/darbak_primary</item>
+        <item name="android:navigationBarColor">@color/darbak_bg</item>
+        <item name="android:statusBarColor">@color/darbak_bg</item>
+    </style>
+</resources>

@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DarbakTools"
 include ':app'
+include ':darbak-core'

@@ -1,0 +1,31 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Darbak Core intentionally declares no runtime/sensitive permissions.
+         Host apps opt in only to the permissions required by enabled features. -->
+    <application>
+        <activity
+            android:name="com.abosultan.darbakcore.DarbakSplashActivity"
+            android:theme="@style/DarbakTheme"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+        <activity
+            android:name="com.abosultan.darbakcore.DarbakAboutActivity"
+            android:theme="@style/DarbakTheme"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+        <activity
+            android:name="com.abosultan.darbakcore.DarbakDiagnosticsActivity"
+            android:theme="@style/DarbakTheme"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+
+        <provider
+            android:name="com.abosultan.darbakcore.DarbakFileProvider"
+            android:authorities="${applicationId}.darbakcore.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/darbak_file_paths" />
+        </provider>
+    </application>
+</manifest>

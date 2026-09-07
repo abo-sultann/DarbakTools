@@ -1,7 +1,9 @@
-name: Build DarbakTools APK
+name: Build DarbakTools + Darbak Core
 
 on:
   push:
+    branches: [ main, darbak-platform-v1 ]
+  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
@@ -34,8 +36,11 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Lint Darbak Core
+        run: gradle --no-daemon --stacktrace :darbak-core:lintDebug
+
       - name: Build debug APK
-        run: gradle --no-daemon --stacktrace assembleDebug
+        run: gradle --no-daemon --stacktrace :app:assembleDebug
 
       - name: Prepare APK
         run: |
