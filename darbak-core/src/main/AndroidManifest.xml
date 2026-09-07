@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
+    <!-- Darbak Core intentionally declares no runtime/sensitive permissions.
+         Host apps opt in only to the permissions required by enabled features. -->
     <application>
         <activity
             android:name="com.abosultan.darbakcore.DarbakSplashActivity"
