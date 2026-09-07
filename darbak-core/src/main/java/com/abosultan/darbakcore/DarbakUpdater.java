@@ -11,9 +11,11 @@ import androidx.core.content.FileProvider;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -39,6 +41,11 @@ public final class DarbakUpdater {
         }
     }
 
+    public interface CheckListener {
+        void onResult(UpdateInfo info, boolean newer);
+        void onError(String message, Throwable error);
+    }
+
     public interface Listener {
         void onProgress(int percent);
         void onReady(UpdateInfo info, File apk);
@@ -58,6 +65,31 @@ public final class DarbakUpdater {
                 o.optString("sha256", "").trim().toLowerCase(Locale.US),
                 o.optString("notes", "")
         );
+    }
+
+    public static void check(Context context, String manifestUrl, CheckListener listener) {
+        IO.execute(() -> {
+            HttpURLConnection c = null;
+            try {
+                c = (HttpURLConnection) new URL(manifestUrl).openConnection();
+                c.setConnectTimeout(10000);
+                c.setReadTimeout(15000);
+                c.setInstanceFollowRedirects(true);
+                int code = c.getResponseCode();
+                if (code < 200 || code >= 300) throw new IllegalStateException("HTTP " + code);
+                StringBuilder json = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(c.getInputStream(), "UTF-8"))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) json.append(line);
+                }
+                UpdateInfo info = parseManifest(json.toString());
+                listener.onResult(info, isNewer(context, info));
+            } catch (Throwable error) {
+                listener.onError("تعذر التحقق من وجود تحديث", error);
+            } finally {
+                if (c != null) c.disconnect();
+            }
+        });
     }
 
     public static boolean isNewer(Context context, UpdateInfo info) {
