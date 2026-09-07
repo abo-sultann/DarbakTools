@@ -4,6 +4,11 @@
 
     <application>
         <activity
+            android:name="com.abosultan.darbakcore.DarbakSplashActivity"
+            android:theme="@style/DarbakTheme"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+        <activity
             android:name="com.abosultan.darbakcore.DarbakAboutActivity"
             android:theme="@style/DarbakTheme"
             android:screenOrientation="landscape"
