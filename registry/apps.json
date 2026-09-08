@@ -1,11 +1,17 @@
 {
-  "schema": 1,
+  "schema": 2,
   "platform": "Darbak App Platform",
   "target": {
     "androidBaseline": "7.1 / API 25",
     "screen": "1024x600 landscape",
     "language": "Arabic RTL",
     "priority": ["stability", "performance", "offline-first", "clarity"]
+  },
+  "productionPolicy": {
+    "physicalDeviceQaRequired": true,
+    "stableSigningRequired": true,
+    "updateVerificationRequired": ["https", "version", "package", "sha256", "signature"],
+    "officialIdentity": "دربك — تصميم وتطوير — أبوسلطان"
   },
   "apps": [
     {
@@ -14,8 +20,11 @@
       "package": "com.aistudio.carlauncher.lzrk26",
       "versionCode": 20008,
       "versionName": "2.0.8",
-      "updateManifestConfigured": true,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "stable", "storage": "repository-private-key"},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "physicalDeviceQa": "pending-after-platform-update",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "DarbakTools",
@@ -23,8 +32,11 @@
       "package": "com.abosultan.darbaktools",
       "versionCode": 3,
       "versionName": "1.1.1",
-      "updateManifestConfigured": false,
-      "coreMigration": "reference-implementation"
+      "coreMigration": "reference-implementation",
+      "signing": {"status": "not-required-for-reference-core"},
+      "update": {"mechanism": "none", "configured": false, "verified": false},
+      "physicalDeviceQa": "not-required-for-core-reference",
+      "productionStatus": "reference-implementation"
     },
     {
       "name": "Laqqinni",
@@ -32,8 +44,11 @@
       "package": "com.abosultan.laqqinni",
       "versionCode": 2,
       "versionName": "1.0.1",
-      "updateManifestConfigured": false,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": false, "hardening": "production-hardening-v1"},
+      "physicalDeviceQa": "pending",
+      "productionStatus": "hardening-in-validation"
     },
     {
       "name": "DarbakAdhkar",
@@ -41,8 +56,11 @@
       "package": "com.abosultan.darbakadhkar",
       "versionCode": 3,
       "versionName": "1.0.2",
-      "updateManifestConfigured": false,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
+      "update": {"mechanism": "public-google-drive-json", "configured": true, "verified": true, "checks": ["size", "sha256"]},
+      "physicalDeviceQa": "pending-after-production-signing",
+      "productionStatus": "blocked-by-signing-baseline"
     },
     {
       "name": "DarbakMaintenance",
@@ -50,8 +68,11 @@
       "package": "com.abosultan.darbakmaintenance",
       "versionCode": 10001,
       "versionName": "1.0.1",
-      "updateManifestConfigured": true,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "stable", "storage": "repository-private-key"},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "physicalDeviceQa": "pending-after-platform-update",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "Darbak Kids TV",
@@ -59,8 +80,11 @@
       "package": "com.abosultan.darbakkidstv",
       "versionCode": 6,
       "versionName": "0.4.0",
-      "updateManifestConfigured": true,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "stable", "storage": "repository-private-key"},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "physicalDeviceQa": "pending-after-platform-update",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "DarbakMaps",
@@ -68,8 +92,11 @@
       "package": "com.abosultan.darbakmaps",
       "versionCode": 5,
       "versionName": "0.2.3",
-      "updateManifestConfigured": false,
-      "coreMigration": "merged-map-safe"
+      "coreMigration": "merged-map-safe",
+      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
+      "update": {"mechanism": "https-json-sha256", "configured": false, "verified": false, "blocker": "distribution-manifest-not-wired"},
+      "physicalDeviceQa": "pending-after-production-signing",
+      "productionStatus": "blocked-by-update-and-signing-baseline"
     },
     {
       "name": "DarbAlSout2",
@@ -77,8 +104,11 @@
       "package": "com.abosultan.darbalsoot.gdrive",
       "versionCode": 7,
       "versionName": "1.0.6",
-      "updateManifestConfigured": false,
-      "coreMigration": "merged"
+      "coreMigration": "merged",
+      "signing": {"status": "stable", "storage": "repository-permanent-key"},
+      "update": {"mechanism": "authenticated-google-drive-folder", "configured": true, "verified": true, "checks": ["sha256", "package", "version", "api", "signature"]},
+      "physicalDeviceQa": "pending-real-head-unit",
+      "productionStatus": "ready-for-device-qa"
     }
   ]
 }
