@@ -39,19 +39,18 @@ jobs:
       - name: Lint Darbak Core
         run: gradle --no-daemon --stacktrace :darbak-core:lintDebug
 
-      - name: Build debug APK
-        run: gradle --no-daemon --stacktrace :app:assembleDebug
+      - name: Build release for external signing
+        run: gradle --no-daemon --stacktrace :app:assembleRelease :app:lintRelease
 
       - name: Prepare APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk dist/DarbakTools-debug.apk
+          cp app/build/outputs/apk/release/app-release-unsigned.apk dist/DarbakTools-release-unsigned.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: DarbakTools-APK
-          path: dist/DarbakTools-debug.apk
+          name: DarbakTools-release-unsigned
+          path: dist/DarbakTools-release-unsigned.apk
           if-no-files-found: error
           retention-days: 1
-
