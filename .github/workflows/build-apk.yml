@@ -54,3 +54,4 @@ jobs:
           path: dist/DarbakTools-debug.apk
           if-no-files-found: error
           retention-days: 1
+
