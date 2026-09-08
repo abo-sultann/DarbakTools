@@ -15,7 +15,7 @@
       "versionCode": 20008,
       "versionName": "2.0.8",
       "updateManifestConfigured": true,
-      "coreMigration": "pending"
+      "coreMigration": "merged"
     },
     {
       "name": "DarbakTools",
@@ -33,7 +33,7 @@
       "versionCode": 2,
       "versionName": "1.0.1",
       "updateManifestConfigured": false,
-      "coreMigration": "pending"
+      "coreMigration": "validating"
     },
     {
       "name": "DarbakAdhkar",
@@ -42,7 +42,7 @@
       "versionCode": 3,
       "versionName": "1.0.2",
       "updateManifestConfigured": false,
-      "coreMigration": "pending"
+      "coreMigration": "merged"
     },
     {
       "name": "DarbakMaintenance",
@@ -51,7 +51,7 @@
       "versionCode": 10001,
       "versionName": "1.0.1",
       "updateManifestConfigured": true,
-      "coreMigration": "pending"
+      "coreMigration": "merged"
     },
     {
       "name": "Darbak Kids TV",
@@ -60,7 +60,7 @@
       "versionCode": 6,
       "versionName": "0.4.0",
       "updateManifestConfigured": true,
-      "coreMigration": "pending"
+      "coreMigration": "merged"
     },
     {
       "name": "DarbakMaps",
@@ -69,7 +69,7 @@
       "versionCode": 5,
       "versionName": "0.2.3",
       "updateManifestConfigured": false,
-      "coreMigration": "pending"
+      "coreMigration": "merged-map-safe"
     },
     {
       "name": "DarbAlSout2",
@@ -78,7 +78,7 @@
       "versionCode": 7,
       "versionName": "1.0.6",
       "updateManifestConfigured": false,
-      "coreMigration": "pending"
+      "coreMigration": "validating-android7-emulator"
     }
   ]
 }
