@@ -1,5 +1,5 @@
 {
-  "schema": 2,
+  "schema": 3,
   "platform": "Darbak App Platform",
   "target": {
     "androidBaseline": "7.1 / API 25",
@@ -10,8 +10,10 @@
   "productionPolicy": {
     "physicalDeviceQaRequired": true,
     "stableSigningRequired": true,
-    "updateVerificationRequired": ["https", "version", "package", "sha256", "signature"],
-    "officialIdentity": "دربك — تصميم وتطوير — أبوسلطان"
+    "debugApkIsNeverProduction": true,
+    "updateVerificationRequired": ["https", "version", "package", "minSdk", "sha256", "signature"],
+    "officialIdentity": "دربك — تصميم وتطوير — أبوسلطان",
+    "releaseGateDocument": "docs/PRODUCTION_RELEASE_GATE.md"
   },
   "apps": [
     {
@@ -22,7 +24,7 @@
       "versionName": "2.0.8",
       "coreMigration": "merged",
       "signing": {"status": "stable", "storage": "repository-private-key"},
-      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "codeVerified": true, "endToEndVerified": true},
       "physicalDeviceQa": "pending-after-platform-update",
       "productionStatus": "ready-for-device-qa"
     },
@@ -34,7 +36,7 @@
       "versionName": "1.1.1",
       "coreMigration": "reference-implementation",
       "signing": {"status": "not-required-for-reference-core"},
-      "update": {"mechanism": "none", "configured": false, "verified": false},
+      "update": {"mechanism": "none", "configured": false, "codeVerified": false, "endToEndVerified": false},
       "physicalDeviceQa": "not-required-for-core-reference",
       "productionStatus": "reference-implementation"
     },
@@ -45,10 +47,30 @@
       "versionCode": 2,
       "versionName": "1.0.1",
       "coreMigration": "merged",
-      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
-      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": false, "hardening": "production-hardening-v1"},
-      "physicalDeviceQa": "pending",
-      "productionStatus": "hardening-in-validation"
+      "signing": {
+        "status": "production-key-created",
+        "storage": "private-google-drive",
+        "releaseGate": "external-env-required",
+        "migration": "one-time-manual-production-install-required"
+      },
+      "update": {
+        "mechanism": "public-google-drive-text-manifest",
+        "configured": true,
+        "codeVerified": true,
+        "checks": ["https", "version", "package", "minSdk", "size", "sha256", "signature"],
+        "distributionState": "production-baseline-pending",
+        "manifestVersionCode": 0,
+        "endToEndVerified": false
+      },
+      "codeQa": {
+        "branchRun": 34189121268,
+        "mainRun": 34189523006,
+        "mainSha": "1c33e916ba01901d1773f12dc06a041b1b206cc9",
+        "status": "success",
+        "checks": ["quran-114-6236", "unit-tests", "build", "lint", "artifact"]
+      },
+      "physicalDeviceQa": "pending-after-production-signing",
+      "productionStatus": "blocked-by-signing-baseline"
     },
     {
       "name": "DarbakAdhkar",
@@ -57,8 +79,27 @@
       "versionCode": 3,
       "versionName": "1.0.2",
       "coreMigration": "merged",
-      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
-      "update": {"mechanism": "public-google-drive-json", "configured": true, "verified": true, "checks": ["size", "sha256"]},
+      "signing": {
+        "status": "production-key-created",
+        "storage": "private-google-drive",
+        "releaseGate": "external-env-required",
+        "migration": "one-time-manual-production-install-required"
+      },
+      "update": {
+        "mechanism": "public-google-drive-json",
+        "configured": true,
+        "codeVerified": true,
+        "checks": ["https", "version", "package", "minSdk", "size", "sha256", "signature"],
+        "endToEndVerified": false,
+        "blocker": "new-production-signing-baseline-not-published"
+      },
+      "codeQa": {
+        "branchRun": 34189452644,
+        "mainRun": 34189680529,
+        "mainSha": "097484db7ba28d1039b35bfaa0e4a2029b743316",
+        "status": "success",
+        "checks": ["build", "lint", "artifact"]
+      },
       "physicalDeviceQa": "pending-after-production-signing",
       "productionStatus": "blocked-by-signing-baseline"
     },
@@ -70,7 +111,7 @@
       "versionName": "1.0.1",
       "coreMigration": "merged",
       "signing": {"status": "stable", "storage": "repository-private-key"},
-      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "codeVerified": true, "endToEndVerified": true},
       "physicalDeviceQa": "pending-after-platform-update",
       "productionStatus": "ready-for-device-qa"
     },
@@ -82,7 +123,7 @@
       "versionName": "0.4.0",
       "coreMigration": "merged",
       "signing": {"status": "stable", "storage": "repository-private-key"},
-      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "verified": true},
+      "update": {"mechanism": "public-google-drive-manifest", "configured": true, "codeVerified": true, "endToEndVerified": true},
       "physicalDeviceQa": "pending-after-platform-update",
       "productionStatus": "ready-for-device-qa"
     },
@@ -93,10 +134,30 @@
       "versionCode": 5,
       "versionName": "0.2.3",
       "coreMigration": "merged-map-safe",
-      "signing": {"status": "production-key-created", "storage": "private-google-drive", "migration": "one-time-manual-production-install-required"},
-      "update": {"mechanism": "https-json-sha256", "configured": false, "verified": false, "blocker": "distribution-manifest-not-wired"},
+      "signing": {
+        "status": "production-key-created",
+        "storage": "private-google-drive",
+        "releaseGate": "external-env-required",
+        "migration": "one-time-manual-production-install-required"
+      },
+      "update": {
+        "mechanism": "public-google-drive-text-manifest",
+        "configured": true,
+        "codeVerified": true,
+        "checks": ["https", "version", "package", "minSdk", "sha256", "signature"],
+        "distributionState": "production-baseline-pending",
+        "manifestVersionCode": 0,
+        "endToEndVerified": false
+      },
+      "codeQa": {
+        "branchRun": 34189358796,
+        "mainRun": 34189571134,
+        "mainSha": "fd91fb0b3330e07d1fc7bb6bd0ddc648f1a8b88c",
+        "status": "success",
+        "checks": ["build", "lint", "unit-tests", "artifact"]
+      },
       "physicalDeviceQa": "pending-after-production-signing",
-      "productionStatus": "blocked-by-update-and-signing-baseline"
+      "productionStatus": "blocked-by-signing-baseline"
     },
     {
       "name": "DarbAlSout2",
@@ -106,7 +167,7 @@
       "versionName": "1.0.6",
       "coreMigration": "merged",
       "signing": {"status": "stable", "storage": "repository-permanent-key"},
-      "update": {"mechanism": "authenticated-google-drive-folder", "configured": true, "verified": true, "checks": ["sha256", "package", "version", "api", "signature"]},
+      "update": {"mechanism": "authenticated-google-drive-folder", "configured": true, "codeVerified": true, "endToEndVerified": true, "checks": ["sha256", "package", "version", "api", "signature"]},
       "physicalDeviceQa": "pending-real-head-unit",
       "productionStatus": "ready-for-device-qa"
     }
