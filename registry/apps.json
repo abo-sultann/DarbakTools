@@ -78,7 +78,7 @@
       "versionCode": 7,
       "versionName": "1.0.6",
       "updateManifestConfigured": false,
-      "coreMigration": "validating-android7-emulator"
+      "coreMigration": "merged"
     }
   ]
 }
