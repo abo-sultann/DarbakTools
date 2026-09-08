@@ -1,5 +1,5 @@
 {
-  "schema": 3,
+  "schema": 4,
   "platform": "Darbak App Platform",
   "target": {
     "androidBaseline": "7.1 / API 25",
@@ -48,18 +48,30 @@
       "versionName": "1.0.1",
       "coreMigration": "merged",
       "signing": {
-        "status": "production-key-created",
+        "status": "stable-baseline-published",
         "storage": "private-google-drive",
-        "releaseGate": "external-env-required",
+        "scheme": "v1-jar",
+        "certificateSha256": "B5:E4:6C:16:06:A6:C3:A2:0F:D1:20:7A:4F:6F:28:6B:34:0A:64:27:9E:46:2D:5E:D7:9E:79:18:17:7C:9F:92",
         "migration": "one-time-manual-production-install-required"
+      },
+      "signedBaseline": {
+        "driveFileId": "17pXK_54FeBp_uwFJQJ9SK5vLsuu4EJsZ",
+        "versionCode": 2,
+        "versionName": "1.0.1",
+        "size": 13588613,
+        "sha256": "a8415dc9f6466bfb535182242d56598a0e45dbda1531d2d021a2d527f9c391a4",
+        "buildRun": 34190121830,
+        "signatureVerified": true,
+        "driveVisibility": "anyone-reader"
       },
       "update": {
         "mechanism": "public-google-drive-text-manifest",
         "configured": true,
         "codeVerified": true,
         "checks": ["https", "version", "package", "minSdk", "size", "sha256", "signature"],
-        "distributionState": "production-baseline-pending",
+        "distributionState": "production-baseline-device-qa",
         "manifestVersionCode": 0,
+        "autoUpdateEnabledForBaseline": false,
         "endToEndVerified": false
       },
       "codeQa": {
@@ -69,8 +81,8 @@
         "status": "success",
         "checks": ["quran-114-6236", "unit-tests", "build", "lint", "artifact"]
       },
-      "physicalDeviceQa": "pending-after-production-signing",
-      "productionStatus": "blocked-by-signing-baseline"
+      "physicalDeviceQa": "pending-manual-baseline-install",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "DarbakAdhkar",
@@ -80,18 +92,30 @@
       "versionName": "1.0.2",
       "coreMigration": "merged",
       "signing": {
-        "status": "production-key-created",
+        "status": "stable-baseline-published",
         "storage": "private-google-drive",
-        "releaseGate": "external-env-required",
+        "scheme": "v1-jar",
+        "certificateSha256": "7C:C8:F4:6D:2C:3B:01:60:EC:2C:81:E8:3B:D6:34:10:65:27:83:AD:C0:F1:FB:B9:71:FA:0F:50:42:0A:53:3A",
         "migration": "one-time-manual-production-install-required"
+      },
+      "signedBaseline": {
+        "driveFileId": "1TRuqnwHxbu4snCbxwiS2IGAXYgl46oWR",
+        "versionCode": 3,
+        "versionName": "1.0.2",
+        "size": 11342339,
+        "sha256": "6bdd37161c9002f24d66361214a206c0d9a56d731e6fca2eacef3050cde6b078",
+        "buildRun": 34190160997,
+        "signatureVerified": true,
+        "driveVisibility": "anyone-reader"
       },
       "update": {
         "mechanism": "public-google-drive-json",
         "configured": true,
         "codeVerified": true,
         "checks": ["https", "version", "package", "minSdk", "size", "sha256", "signature"],
-        "endToEndVerified": false,
-        "blocker": "new-production-signing-baseline-not-published"
+        "distributionState": "signed-baseline-published-separate",
+        "autoUpdateEnabledForBaseline": false,
+        "endToEndVerified": false
       },
       "codeQa": {
         "branchRun": 34189452644,
@@ -100,8 +124,8 @@
         "status": "success",
         "checks": ["build", "lint", "artifact"]
       },
-      "physicalDeviceQa": "pending-after-production-signing",
-      "productionStatus": "blocked-by-signing-baseline"
+      "physicalDeviceQa": "pending-manual-baseline-install",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "DarbakMaintenance",
@@ -135,18 +159,30 @@
       "versionName": "0.2.3",
       "coreMigration": "merged-map-safe",
       "signing": {
-        "status": "production-key-created",
+        "status": "stable-baseline-published",
         "storage": "private-google-drive",
-        "releaseGate": "external-env-required",
+        "scheme": "v1-jar",
+        "certificateSha256": "91:59:1C:53:85:20:97:11:CB:CB:CC:E1:9B:8D:E0:39:F0:50:DD:FF:A3:2F:7F:D9:DD:D4:4D:5C:5B:B1:E3:BD",
         "migration": "one-time-manual-production-install-required"
+      },
+      "signedBaseline": {
+        "driveFileId": "13YD6G8ocr0eDdjZLqb5nIRIGWlSe2I_G",
+        "versionCode": 5,
+        "versionName": "0.2.3",
+        "size": 897727,
+        "sha256": "1d2822d13df28fcb6fd94c9c3435eb23f7b3c64ee5898146c713b8580e66a7de",
+        "buildRun": 34190269548,
+        "signatureVerified": true,
+        "driveVisibility": "anyone-reader"
       },
       "update": {
         "mechanism": "public-google-drive-text-manifest",
         "configured": true,
         "codeVerified": true,
         "checks": ["https", "version", "package", "minSdk", "sha256", "signature"],
-        "distributionState": "production-baseline-pending",
+        "distributionState": "production-baseline-device-qa",
         "manifestVersionCode": 0,
+        "autoUpdateEnabledForBaseline": false,
         "endToEndVerified": false
       },
       "codeQa": {
@@ -156,8 +192,8 @@
         "status": "success",
         "checks": ["build", "lint", "unit-tests", "artifact"]
       },
-      "physicalDeviceQa": "pending-after-production-signing",
-      "productionStatus": "blocked-by-signing-baseline"
+      "physicalDeviceQa": "pending-manual-baseline-install",
+      "productionStatus": "ready-for-device-qa"
     },
     {
       "name": "DarbAlSout2",
