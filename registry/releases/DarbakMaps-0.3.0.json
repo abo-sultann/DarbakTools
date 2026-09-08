@@ -1,0 +1,38 @@
+{
+  "app": "DarbakMaps",
+  "package": "com.abosultan.darbakmaps",
+  "versionCode": 8,
+  "versionName": "0.3.0",
+  "mainSha": "5d851664b2a0a169b561e644a870ef66bb42e9c5",
+  "mainQaRun": 34207215954,
+  "releaseBuildRun": 34207431918,
+  "signedRelease": {
+    "driveFileId": "1unyL_G3Y9Yc07v4SRae7at29thCFR35J",
+    "visibleLatestDriveFileId": "1HtdPYbK8CzhhF7E-WH2BDJf2EXcXxv7M",
+    "size": 929918,
+    "sha256": "dabc3e4a0af62f2ceb7166a86ae448421a26bf2e00e80b91b33afd84b8004853",
+    "certificateSha256": "91:59:1C:53:85:20:97:11:CB:CB:CC:E1:9B:8D:E0:39:F0:50:DD:FF:A3:2F:7F:D9:DD:D4:4D:5C:5B:B1:E3:BD",
+    "signatureVerified": true,
+    "driveVisibility": "anyone-reader"
+  },
+  "updateManifest": {
+    "driveFileId": "1H8Rg6wBe3XJTZhxuoBH67n_1GlHX8X2WwJij9bsus9s",
+    "manifestVersionCode": 8,
+    "manifestVersionName": "0.3.0",
+    "configured": true,
+    "publicReader": true,
+    "autoUpdateEnabled": true
+  },
+  "features": [
+    "map-first off-road UI",
+    "persistent speed upper-left",
+    "tap-to-toggle tools with auto-hide",
+    "single off-road map mode",
+    "offline search for cities and desert places",
+    "north/heading/free orientation modes",
+    "unified Darbak settings",
+    "long-press waypoint saving",
+    "track recording and saved places"
+  ],
+  "status": "released-awaiting-physical-device-end-to-end-update-qa"
+}
