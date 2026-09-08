@@ -13,7 +13,7 @@
 | DarbakAdhkar | merged | debug build + Android lint | نصوص صحيح مسلم ومنطق الورد والعداد لم تُمس؛ تشخيص محلي مخفي |
 | DarbakMaps | merged-map-safe | clean + lint + unit tests + debug APK | Runtime خفيف فقط عند process startup؛ لا Mapsforge/GPS/network/license في Application |
 | Laqqinni | merged | Quran asset 114/6236 + Robolectric API25 + screenshot API35 + unit tests + build + lint | اختبارات Robolectric متوافقة مع Java 17 وشاشة السيارة؛ لا تغيير في المصحف أو الحفظ |
-| DarbAlSout2 | validating-android7-emulator | Android 7.1 emulator 1024×600 / 1GB + sync error-path checks | Crash runtime قبل DB/Auth/Drive؛ updater المتخصص SHA-256/package/version/API/signature محفوظ |
+| DarbAlSout2 | merged | Android 7.1/API25 emulator 1024×600 / 1GB + startup + dynamic version check + hidden diagnostics long-press + sync error paths | Crash runtime قبل DB/Auth/Drive؛ updater المتخصص SHA-256/package/version/API/signature محفوظ؛ QA run 34186768519 نجح ثم دُمج PR #2 إلى main بالـcommit eb6d481c8a7efb9957021bf63b67cd0f9d871bb6 |
 
 ## قواعد الإغلاق
 
