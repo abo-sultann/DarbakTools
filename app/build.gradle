@@ -10,9 +10,12 @@ android {
         applicationId 'com.abosultan.darbaktools'
         minSdk 25
         targetSdk 28
-        versionCode 3
-        versionName '1.1.1'
+        versionCode 4
+        versionName "1.2.0"
     }
+
+    // This APK is sideloaded on API 25 head units, never distributed on Google Play.
+    lint { disable 'ExpiredTargetSdkVersion' }
 
     buildTypes {
         release {

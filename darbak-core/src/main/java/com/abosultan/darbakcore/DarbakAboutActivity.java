@@ -39,13 +39,12 @@ public class DarbakAboutActivity extends Activity {
         page.addView(identity, DarbakUi.cardParams(this));
 
         LinearLayout signature = DarbakUi.card(this, "دربك", "تصميم وتطوير  •  أبوسلطان");
-        TextView mark = new TextView(this);
-        mark.setText("دربك\nتصميم وتطوير\nأبوسلطان");
-        mark.setTextColor(getResources().getColor(R.color.darbak_gold));
-        mark.setTextSize(25);
-        mark.setGravity(Gravity.CENTER);
+        android.widget.ImageView mark = new android.widget.ImageView(this);
+        mark.setImageResource(R.drawable.darbak_owner_signature);
+        mark.setContentDescription("دربك — تصميم وتطوير — أبوسلطان");
+        mark.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
         mark.setPadding(0, DarbakUi.dp(this, 10), 0, DarbakUi.dp(this, 4));
-        signature.addView(mark, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        signature.addView(mark, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DarbakUi.dp(this, 160)));
         page.addView(signature, DarbakUi.cardParams(this));
 
         LinearLayout version = DarbakUi.card(this, "النسخة الحالية", snapshot.versionName + "  (" + snapshot.versionCode + ")");

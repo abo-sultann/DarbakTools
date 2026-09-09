@@ -10,15 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public final class Ui {
-    public static final int BG = Color.rgb(5, 20, 16);
-    public static final int PANEL = Color.rgb(13, 40, 33);
-    public static final int PANEL_2 = Color.rgb(18, 54, 45);
+    public static final int BG = Color.rgb(10, 22, 51);
+    public static final int PANEL = Color.rgb(16, 32, 64);
+    public static final int PANEL_2 = Color.rgb(16, 43, 92);
+    public static final int BLUE = Color.rgb(25, 181, 255);
     public static final int GOLD = Color.rgb(216, 180, 90);
     public static final int TEXT = Color.rgb(247, 249, 248);
-    public static final int MUTED = Color.rgb(159, 179, 172);
+    public static final int MUTED = Color.rgb(208, 226, 241);
     public static final int GREEN = Color.rgb(66, 211, 146);
     public static final int RED = Color.rgb(255, 117, 109);
-    public static final int LINE = Color.rgb(38, 75, 64);
+    public static final int LINE = Color.rgb(45, 85, 115);
 
     private Ui() {}
 
@@ -36,7 +37,7 @@ public final class Ui {
 
     public static GradientDrawable verticalGradient(Context c) {
         GradientDrawable d = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{Color.rgb(7, 27, 22), BG});
+                new int[]{PANEL, BG});
         d.setCornerRadius(0);
         return d;
     }
@@ -55,7 +56,7 @@ public final class Ui {
         TextView v = title(c, text, 13);
         v.setTextColor(color);
         v.setGravity(Gravity.CENTER);
-        v.setBackground(rounded(Color.rgb(8, 31, 25), LINE, 24, c));
+        v.setBackground(rounded(PANEL, LINE, 24, c));
         v.setPadding(dp(c, 14), dp(c, 7), dp(c, 14), dp(c, 7));
         return v;
     }
@@ -75,7 +76,7 @@ public final class Ui {
     public static Button primaryButton(Context c, String text) {
         Button b = button(c, text);
         b.setTextColor(Color.rgb(16, 34, 28));
-        b.setBackground(rounded(GOLD, GOLD, 14, c));
+        b.setBackground(rounded(BLUE, BLUE, 18, c));
         return b;
     }
 

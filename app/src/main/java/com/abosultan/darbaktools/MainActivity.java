@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
         header.addView(brand, new LinearLayout.LayoutParams(0, -1, 1));
 
         TextView title = Ui.title(this, "دربك Tools", 30);
-        title.setTextColor(Ui.GOLD);
+        title.setTextColor(Ui.TEXT);
         title.setGravity(Gravity.RIGHT | Gravity.BOTTOM);
         brand.addView(title, new LinearLayout.LayoutParams(-1, 0, 1));
 
@@ -86,8 +86,8 @@ public class MainActivity extends Activity {
         grid.addView(row1, new LinearLayout.LayoutParams(-1, 0, 1));
 
         phoneSubtitle = new TextView(this);
-        LinearLayout phone = moduleCard("↔", "الآيفون والتحكم", "جاري اكتشاف عنوان الاتصال…", phoneSubtitle, Ui.GOLD);
-        LinearLayout files = moduleCard("▣", "الملفات", "الذاكرة الداخلية • USB • SD • الوارد", null, Ui.GREEN);
+        LinearLayout phone = moduleCard("↔", "الآيفون والتحكم", "جاري اكتشاف عنوان الاتصال…", phoneSubtitle, Ui.BLUE);
+        LinearLayout files = moduleCard("▣", "الملفات", "الذاكرة الداخلية • USB • SD • الوارد", null, Ui.BLUE);
         row1.addView(phone, Ui.weighted(1, 6, this));
         row1.addView(files, Ui.weighted(1, 6, this));
 
@@ -96,8 +96,8 @@ public class MainActivity extends Activity {
         Ui.rtl(row2);
         grid.addView(row2, new LinearLayout.LayoutParams(-1, 0, 1));
 
-        LinearLayout downloads = moduleCard("↓", "التنزيلات", "تحميل الروابط مباشرة واختيار مكان الحفظ", null, Ui.GOLD);
-        LinearLayout apk = moduleCard("APK", "مركز التطبيقات", "فحص ملفات APK • التوافق • التثبيت والتحديث", null, Ui.GREEN);
+        LinearLayout downloads = moduleCard("↓", "التنزيلات", "تنزيل رابط إلى الشاشة", null, Ui.BLUE);
+        LinearLayout apk = moduleCard("APK", "مركز التطبيقات", "فحص • تثبيت • تحديث", null, Ui.BLUE);
         row2.addView(downloads, Ui.weighted(1, 6, this));
         row2.addView(apk, Ui.weighted(1, 6, this));
 
@@ -106,12 +106,12 @@ public class MainActivity extends Activity {
         downloads.setOnClickListener(v -> startActivity(new Intent(this, DownloadActivity.class)));
         apk.setOnClickListener(v -> startActivity(new Intent(this, ApkActivity.class)));
 
-        footer = Ui.title(this, "Android 7.1 • 1024×600 • اتصال محلي فقط", 12);
+        footer = Ui.title(this, "حول دربك", 16);
         footer.setTextColor(Ui.MUTED);
         footer.setGravity(Gravity.CENTER);
         footer.setClickable(true);
         footer.setOnClickListener(v -> startActivity(new Intent(this, DarbakAboutActivity.class)));
-        root.addView(footer, new LinearLayout.LayoutParams(-1, Ui.dp(this, 32)));
+        root.addView(footer, new LinearLayout.LayoutParams(-1, Ui.dp(this, 52)));
         return root;
     }
 
@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
             serverPill.setText("● الاتصال جاهز");
             serverPill.setTextColor(Ui.GREEN);
             phoneSubtitle.setText("http://" + ip + ":" + port + " • Safari");
-            footer.setText("الخادم يعمل • " + ip + ":" + port + " • Android " + android.os.Build.VERSION.RELEASE);
+            footer.setText("حول دربك");
         } else if (running) {
             serverPill.setText("● بانتظار الشبكة");
             serverPill.setTextColor(Ui.GOLD);
